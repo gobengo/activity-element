@@ -1,6 +1,14 @@
-# stream-client
+# activity-element
 
-Talk to Livefyre/stream-v4
+Render [JSON Activity Streams](http://tools.ietf.org/html/draft-snell-activitystreams-09) Objects into HTMLElements.
+
+## Example
+
+```javascript
+var activityMocks = require('activity-mocks');
+var el = require('activity-element')(activityMocks.jsonld);
+document.body.appendChild(el);
+```
 
 ## `make` commands
 
