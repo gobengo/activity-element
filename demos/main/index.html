@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+    <h1>Activity</h1>
+    <div id="activity"></div>
+
+    <h1>Activity Feed</h1>
+    <div id="feed"></div>
+
+    <script src="../../node_modules/cajon/cajon.js" type="text/javascript"></script>
+    <script src="../../config/requirejs.conf.js" type="text/javascript"></script>
+    <script>
+    requirejs.config({
+        baseUrl: '../../',
+        deps: ['demos/main/main-demo']
+    });
+    </script>
+</body>
+</html>
