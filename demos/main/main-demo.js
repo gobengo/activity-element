@@ -1,18 +1,28 @@
 var ActivityElement = require('activity-element');
 var cycle = require('stream-cycle');
 var transform = require('stream-transform');
-var mocks = require('activity-mocks');
+var activityMocks = require('activity-mocks');
 
 var exampleActivity = document.getElementById('activity');
 var exampleFeed = document.getElementById('feed');
 
-var activity = mocks.livefyre;
+var activity = activityMocks.livefyre.userPostMessage;
 exampleActivity.appendChild(ActivityElement(activity))
+var activityPrototypes = [activityMocks.livefyre, activityMocks.jsonld, activityMocks.strings];
 
-var activityPrototypes = [mocks.livefyre, mocks.jsonld, mocks.strings];
+var mocks = activityMocks.toArray();
 
-cycle(activityPrototypes)
+cycle(mocks)
   .pipe(transform.map(ActivityElement))
+  .pipe(transform.map(function (el) {
+    el.classList.add('activity');
+    return el;
+  }))
+  .pipe(transform.map(function (el) {
+    var li = document.createElement('li');
+    li.appendChild(el);
+    return li;
+  }))
   .forEach(function (el) {
     exampleFeed.appendChild(el);
   });

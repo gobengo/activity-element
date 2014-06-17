@@ -21,6 +21,7 @@
     "activity-mocks": "0.0.0-dev.0",
     "almond": "^0.2.9",
     "bower": "^1.3.5",
+    "brfs": "^1.1.1",
     "cajon": "^0.2.4",
     "chai": "1.8.1",
     "http-server": "^0.6.1",
@@ -37,6 +38,10 @@
     "requirejs": "^2.1.14",
     "sinon": "^1.10.2",
     "stream-cycle": "0.0.2",
-    "stream-transform": "git://github.com/gobengo/stream-transform.git"
+    "stream-transform": "git://github.com/gobengo/stream-transform.git",
+    "watchify": "^0.10.2"
+  },
+  "dependencies": {
+    "domify": "^1.2.2"
   }
 }

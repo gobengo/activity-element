@@ -13,7 +13,8 @@ require.config({
         'activity-mocks': 'node_modules/activity-mocks/dist/activity-mocks',
         events: 'node_modules/stream-transform/node_modules/stream-arrays/node_modules/stream-objectmode/node_modules/events/events',
         inherits: 'node_modules/stream-transform/node_modules/stream-arrays/node_modules/inherits/inherits_browser',
-        'util-extend': 'node_modules/stream-transform/node_modules/stream-arrays/node_modules/stream-objectmode/node_modules/util-extend/extend'
+        'util-extend': 'node_modules/stream-transform/node_modules/stream-arrays/node_modules/stream-objectmode/node_modules/util-extend/extend',
+        'activity-element': 'dist/activity-element'
     },
     map: {
         '*': {
@@ -21,10 +22,6 @@ require.config({
         }
     },
     packages: [{
-        name: 'activity-element',
-        location: 'src',
-        main: 'index'
-    },{
         name: 'stream-objectmode',
         location: 'node_modules/stream-transform/node_modules/stream-arrays/node_modules/stream-objectmode/src',
     },{
