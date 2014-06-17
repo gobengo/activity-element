@@ -71,7 +71,6 @@ function siteElement(site) {
 }
 
 function objectElement(object) {
-  console.log('creating objectElement for', object);
   if (typeof object === 'string') {
     return textNode('the resource '+object);
   }

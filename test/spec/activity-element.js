@@ -1,4 +1,8 @@
-"use strict";
+// "use strict";
+
+jsdom = require('jsdom').jsdom;
+document = jsdom('<html><head><script></script></head><body></body></html>');
+window = document.createWindow();
 
 var ActivityElement = require('activity-element');
 var mocks = require('activity-mocks');
@@ -7,7 +11,7 @@ var sinon = require('sinon');
 
 describe('activity-element', function () {
     it('renders an element', function () {
-        var el = ActivityElement(mocks.livefyre);
+        var el = ActivityElement(mocks.livefyre.sitePostCollection);
         assert.ok(el);
         assert.typeOf(el.appendChild, 'function');
     });

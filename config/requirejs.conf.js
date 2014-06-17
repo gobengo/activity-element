@@ -11,10 +11,11 @@ require.config({
         'stream-cycle': 'node_modules/stream-cycle/src/index',
         'stream-transform': 'node_modules/stream-transform/src/index',
         'activity-mocks': 'node_modules/activity-mocks/dist/activity-mocks',
-        events: 'node_modules/stream-transform/node_modules/stream-arrays/node_modules/stream-objectmode/node_modules/events/events',
+        events: 'node_modules/stream-transform/node_modules/stream-objectmode/node_modules/events/events',
         inherits: 'node_modules/stream-transform/node_modules/stream-arrays/node_modules/inherits/inherits_browser',
-        'util-extend': 'node_modules/stream-transform/node_modules/stream-arrays/node_modules/stream-objectmode/node_modules/util-extend/extend',
-        'activity-element': 'dist/activity-element'
+        'util-extend': 'node_modules/stream-transform/node_modules/stream-objectmode/node_modules/util-extend/extend',
+        'activity-element': 'dist/activity-element',
+        'stream-slice': 'node_modules/stream-slice/src/index'
     },
     map: {
         '*': {
@@ -23,7 +24,7 @@ require.config({
     },
     packages: [{
         name: 'stream-objectmode',
-        location: 'node_modules/stream-transform/node_modules/stream-arrays/node_modules/stream-objectmode/src',
+        location: 'node_modules/stream-transform/node_modules/stream-objectmode/src',
     },{
         name: 'stream-arrays',
         location: 'node_modules/stream-transform/node_modules/stream-arrays',
