@@ -1,0 +1,224 @@
+
+/* TODO:
+- Add support for [src]
+- Add support for date [datetime]
+- Add support for [datatype]
+- Add support for [lang]
+- Add support for [rev] as content: "^" attr(rev)
+- Add full reset+html5 css prelude?
+*/
+
+html:before, head:before {
+    display: block;
+    background-color: #eee;
+}
+
+head {
+    background-color: #eee;
+    border-bottom: 1px inset #aaa;
+    display: block;
+    padding: 0.25em;
+}
+
+head > style, head > script {
+    display: none;
+}
+
+head, body {
+    margin: auto;
+    width: 90%;
+}
+
+a[href], link[href] {
+  text-decoration: none;
+}
+
+img, canvas {
+   opacity: 0.3;
+}
+
+link, meta {
+    border: 1px dotted !important;
+}
+
+.rdfa {
+
+    /* TODO: before(2) hardly supported; extend all(!) combos with vocab? E.g.:
+    [resource][typeof][vocab]:before {
+        content: "<" attr(resource) "> a " attr(typeof) " @vocab <" attr(vocab) ">";
+    }
+    */
+    [vocab]:before,
+    [vocab]:before(2) {
+        color: orange;
+        content: "@vocab <" attr(vocab) ">\a";
+    }
+    [prefix]:before {
+        color: orange;
+        content: "@prefix " attr(prefix);
+        white-space: pre;
+    }
+
+    [property]:not([href]):not([resource]):not([typeof]):before {
+        background-color: #ffe;
+        color: #c30;
+        content: attr(property);
+        font-weight: bold;
+    }
+    [property]:not([href]):not([resource]):not([typeof])[content]:before {
+        content: attr(property) " \"" attr(content) "\"";
+    }
+    meta[property]:before {
+        content: attr(property) " \"" attr(content) "\"";
+        vertical-align: baseline !important;
+    }
+    meta[property],
+    [property]:not([href]):not([resource]):not([typeof]):not([content]) {
+        display: inline-block;
+        margin-top: 0.7em;
+        border: 1px solid #fe9;
+        background-color: #ffe;
+    }
+    meta[property] {
+        margin: 0;
+    }
+    [property]:not([href]):not([resource]):not([typeof]):not([content]),
+    [property]:not([href]):not([resource]):not([typeof]):not([content]) * {
+        color: #a43;
+    }
+
+    [about]:before,
+    [typeof]:before,
+    [href]:not([property]):not([rel]):before,
+    [resource]:not([property]):not([rel]):before {
+        color: purple;
+        display: inline-block;
+        font-weight: bold;
+    }
+    [about]:before,
+    [typeof]:before {
+        display: block !important;
+    }
+    [about],
+    [typeof],
+    [href]:not([property]):not([rel]),
+    [resource]:not([property]):not([rel]) {
+        box-shadow: rgba(63, 0, 63, 1) 0em 0.1em 0.1em;
+        border-radius: 7px;
+        border: 1px solid #ede;
+        display: inline-block;
+        padding: 0.5em;
+    }
+    [href]:not([property]):not([rel]):not([typeof]) {
+        box-shadow: rgba(63, 0, 63, 0.4) 0em 0.1em 0.1em;
+        border-radius: 7px;
+    }
+    [about],
+    [typeof] {
+        margin-bottom: 0.8em;
+    }
+
+    [typeof]:before {
+        content: "a " attr(typeof);
+    }
+
+    [about]:before {
+        color: purple;
+        content: "<" attr(about) ">";
+    }
+    [about][typeof]:before {
+        content: "<" attr(about) "> a " attr(typeof);
+    }
+
+    /* TODO: order and test all combos of [property][rel][typeof][resource][href] */
+
+    [rel],
+    [property][resource],
+    [property][href],
+    [property][href]:not([typeof]):before,
+    [property][resource]:not([typeof]):before {
+        border: 1px solid #6da;
+    }
+
+    [property][href]:not([typeof]),
+    [property][resource]:not([typeof]) {
+        border: none;
+    }
+
+    [rel],
+    [property][typeof],
+    [property][typeof][resource],
+    [property][typeof][href] {
+        background-color: #eff;
+        display: inline-block;
+        margin-top: 0.7em;
+    }
+    [href]:before,
+    [href][typeof]:before,
+    [resource]:before,
+    [resource][typeof]:before {
+        color: #067;
+        font-weight: bold;
+    }
+    [href]:before {
+        content: "<" attr(href) ">";
+    }
+    [href][typeof]:before {
+        color: purple;
+        content: "<" attr(href) "> a " attr(typeof);
+    }
+    [resource]:before {
+        content: "<" attr(resource) ">";
+    }
+    [resource][typeof]:before {
+        color: purple;
+        content: "<" attr(resource) "> a " attr(typeof);
+    }
+
+    [rel]:not([resource]):not([href]):before {
+        display: block;
+        margin: 0.5em 0;
+    }
+
+    [rel]:before,
+    [property][href]:before,
+    [property][resource]:before {
+        background-color: #eff;
+        color: #067;
+        font-weight: bold;
+    }
+    link:before {
+        vertical-align: baseline !important;
+    }
+    [property][href]:before {
+        content: attr(property) " <" attr(href) ">";
+    }
+    [property][resource]:before {
+        content: attr(property) " <" attr(resource) ">";
+    }
+    [property][typeof]:before {
+        content: attr(property) " [] a " attr(typeof);
+    }
+    [property][href][typeof]:before {
+        content: attr(property) " <" attr(href) "> a " attr(typeof);
+    }
+    [property][resource][typeof]:before {
+        content: attr(property) " <" attr(resource) "> a " attr(typeof);
+    }
+
+    [rel]:before {
+        content: attr(rel);
+    }
+    [rel][href]:before {
+        content: attr(rel) " <" attr(href) ">";
+    }
+    [rel][resource]:before {
+        content: attr(rel) " <" attr(resource) ">";
+    }
+    [rel][href][typeof]:before {
+        content: attr(rel) " <" attr(href) "> a " attr(typeof);
+    }
+    [rel][resource][typeof]:before {
+        content: attr(rel) " <" attr(resource) "> a " attr(typeof);
+    }
+}

@@ -1,17 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="./main-styles.css" />
+    <link rel="stylesheet" href="./index.css" />
 </head>
 <body>
     <h1>Activity</h1>
     <div id="activity"></div>
 
-    <h1>Livefyre Activity Feed</h1>
-    <div id="collection-feed"></div>
+    <div class="activity-feed" id="collection-feed">
+        <h1>Livefyre Activity Feed</h1>        
+    </div>
 
-    <h1>(All) Activity Feed</h1>
-    <div id="feed"></div>
+    <div class="activity-feed rdfa" id="feed">
+        <h1>(All) Activity Feed</h1>
+    </div>
+
+    <div class="activity-feed" id="stream-client-feed">
+        <h1>stream-client</h1>
+    </div>
 
     <script src="../../node_modules/cajon/cajon.js" type="text/javascript"></script>
     <script src="../../config/requirejs.conf.js" type="text/javascript"></script>

@@ -34,6 +34,7 @@ module.exports = function (activity) {
   }
   getElementsByProperty.call(el, properties.verb)
     .forEach(function (verbNode) {
+      verbNode.setAttribute('content', verb);
       appendText.call(verbNode, verbText);
     });
   

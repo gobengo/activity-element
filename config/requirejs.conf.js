@@ -15,7 +15,10 @@ require.config({
         inherits: 'node_modules/stream-transform/node_modules/stream-arrays/node_modules/inherits/inherits_browser',
         'util-extend': 'node_modules/stream-transform/node_modules/stream-objectmode/node_modules/util-extend/extend',
         'activity-element': 'dist/activity-element',
-        'stream-slice': 'node_modules/stream-slice/src/index'
+        'stream-slice': 'node_modules/stream-slice/src/index',
+        'stream-client': 'lib/stream-client/src/StreamClient',
+        'sockjs': 'lib/sockjs/sockjs',
+        domify: 'node_modules/domify/index'
     },
     map: {
         '*': {

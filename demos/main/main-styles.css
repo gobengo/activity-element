@@ -1,0 +1,18 @@
+@import "./rdfa.less";
+
+.activity-feed {
+    box-sizing: border-box;
+    display: inline-block;
+    max-height: 568px;
+    min-width: 33%;
+    max-width: 320px;
+    overflow-y: auto;
+    vertical-align: top;
+}
+
+.activity {
+    display: block;
+    line-height: 1.5em;
+    padding: .25em;
+    border-bottom: 1px dotted #eee;
+}

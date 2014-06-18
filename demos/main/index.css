@@ -1,0 +1,224 @@
+/* TODO:
+- Add support for [src]
+- Add support for date [datetime]
+- Add support for [datatype]
+- Add support for [lang]
+- Add support for [rev] as content: "^" attr(rev)
+- Add full reset+html5 css prelude?
+*/
+html:before,
+head:before {
+  display: block;
+  background-color: #eee;
+}
+head {
+  background-color: #eee;
+  border-bottom: 1px inset #aaa;
+  display: block;
+  padding: 0.25em;
+}
+head > style,
+head > script {
+  display: none;
+}
+head,
+body {
+  margin: auto;
+  width: 90%;
+}
+a[href],
+link[href] {
+  text-decoration: none;
+}
+img,
+canvas {
+  opacity: 0.3;
+}
+link,
+meta {
+  border: 1px dotted !important;
+}
+.rdfa {
+  /* TODO: before(2) hardly supported; extend all(!) combos with vocab? E.g.:
+    [resource][typeof][vocab]:before {
+        content: "<" attr(resource) "> a " attr(typeof) " @vocab <" attr(vocab) ">";
+    }
+    */
+  /* TODO: order and test all combos of [property][rel][typeof][resource][href] */
+}
+.rdfa [vocab]:before,
+.rdfa [vocab]:before(2) {
+  color: orange;
+  content: "@vocab <" attr(vocab) ">\a";
+}
+.rdfa [prefix]:before {
+  color: orange;
+  content: "@prefix " attr(prefix);
+  white-space: pre;
+}
+.rdfa [property]:not([href]):not([resource]):not([typeof]):before {
+  background-color: #ffe;
+  color: #c30;
+  content: attr(property);
+  font-weight: bold;
+}
+.rdfa [property]:not([href]):not([resource]):not([typeof])[content]:before {
+  content: attr(property) " \"" attr(content) "\"";
+}
+.rdfa meta[property]:before {
+  content: attr(property) " \"" attr(content) "\"";
+  vertical-align: baseline !important;
+}
+.rdfa meta[property],
+.rdfa [property]:not([href]):not([resource]):not([typeof]):not([content]) {
+  display: inline-block;
+  margin-top: 0.7em;
+  border: 1px solid #fe9;
+  background-color: #ffe;
+}
+.rdfa meta[property] {
+  margin: 0;
+}
+.rdfa [property]:not([href]):not([resource]):not([typeof]):not([content]),
+.rdfa [property]:not([href]):not([resource]):not([typeof]):not([content]) * {
+  color: #a43;
+}
+.rdfa [about]:before,
+.rdfa [typeof]:before,
+.rdfa [href]:not([property]):not([rel]):before,
+.rdfa [resource]:not([property]):not([rel]):before {
+  color: purple;
+  display: inline-block;
+  font-weight: bold;
+}
+.rdfa [about]:before,
+.rdfa [typeof]:before {
+  display: block !important;
+}
+.rdfa [about],
+.rdfa [typeof],
+.rdfa [href]:not([property]):not([rel]),
+.rdfa [resource]:not([property]):not([rel]) {
+  box-shadow: #3f003f 0em 0.1em 0.1em;
+  border-radius: 7px;
+  border: 1px solid #ede;
+  display: inline-block;
+  padding: 0.5em;
+}
+.rdfa [href]:not([property]):not([rel]):not([typeof]) {
+  box-shadow: rgba(63, 0, 63, 0.4) 0em 0.1em 0.1em;
+  border-radius: 7px;
+}
+.rdfa [about],
+.rdfa [typeof] {
+  margin-bottom: 0.8em;
+}
+.rdfa [typeof]:before {
+  content: "a " attr(typeof);
+}
+.rdfa [about]:before {
+  color: purple;
+  content: "<" attr(about) ">";
+}
+.rdfa [about][typeof]:before {
+  content: "<" attr(about) "> a " attr(typeof);
+}
+.rdfa [rel],
+.rdfa [property][resource],
+.rdfa [property][href],
+.rdfa [property][href]:not([typeof]):before,
+.rdfa [property][resource]:not([typeof]):before {
+  border: 1px solid #6da;
+}
+.rdfa [property][href]:not([typeof]),
+.rdfa [property][resource]:not([typeof]) {
+  border: none;
+}
+.rdfa [rel],
+.rdfa [property][typeof],
+.rdfa [property][typeof][resource],
+.rdfa [property][typeof][href] {
+  background-color: #eff;
+  display: inline-block;
+  margin-top: 0.7em;
+}
+.rdfa [href]:before,
+.rdfa [href][typeof]:before,
+.rdfa [resource]:before,
+.rdfa [resource][typeof]:before {
+  color: #067;
+  font-weight: bold;
+}
+.rdfa [href]:before {
+  content: "<" attr(href) ">";
+}
+.rdfa [href][typeof]:before {
+  color: purple;
+  content: "<" attr(href) "> a " attr(typeof);
+}
+.rdfa [resource]:before {
+  content: "<" attr(resource) ">";
+}
+.rdfa [resource][typeof]:before {
+  color: purple;
+  content: "<" attr(resource) "> a " attr(typeof);
+}
+.rdfa [rel]:not([resource]):not([href]):before {
+  display: block;
+  margin: 0.5em 0;
+}
+.rdfa [rel]:before,
+.rdfa [property][href]:before,
+.rdfa [property][resource]:before {
+  background-color: #eff;
+  color: #067;
+  font-weight: bold;
+}
+.rdfa link:before {
+  vertical-align: baseline !important;
+}
+.rdfa [property][href]:before {
+  content: attr(property) " <" attr(href) ">";
+}
+.rdfa [property][resource]:before {
+  content: attr(property) " <" attr(resource) ">";
+}
+.rdfa [property][typeof]:before {
+  content: attr(property) " [] a " attr(typeof);
+}
+.rdfa [property][href][typeof]:before {
+  content: attr(property) " <" attr(href) "> a " attr(typeof);
+}
+.rdfa [property][resource][typeof]:before {
+  content: attr(property) " <" attr(resource) "> a " attr(typeof);
+}
+.rdfa [rel]:before {
+  content: attr(rel);
+}
+.rdfa [rel][href]:before {
+  content: attr(rel) " <" attr(href) ">";
+}
+.rdfa [rel][resource]:before {
+  content: attr(rel) " <" attr(resource) ">";
+}
+.rdfa [rel][href][typeof]:before {
+  content: attr(rel) " <" attr(href) "> a " attr(typeof);
+}
+.rdfa [rel][resource][typeof]:before {
+  content: attr(rel) " <" attr(resource) "> a " attr(typeof);
+}
+.activity-feed {
+  box-sizing: border-box;
+  display: inline-block;
+  max-height: 568px;
+  min-width: 33%;
+  max-width: 320px;
+  overflow-y: auto;
+  vertical-align: top;
+}
+.activity {
+  display: block;
+  line-height: 1.5em;
+  padding: .25em;
+  border-bottom: 1px dotted #eee;
+}
