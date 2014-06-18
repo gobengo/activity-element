@@ -4,6 +4,8 @@
     <link rel="stylesheet" href="./index.css" />
 </head>
 <body>
+    <button id="auth-button">Log in</button>
+    <div id="auth-log"></div>
     <h1>Activity</h1>
     <div id="activity"></div>
 
@@ -15,7 +17,7 @@
         <h1>(All) Activity Feed</h1>
     </div>
 
-    <div class="activity-feed" id="stream-client-feed">
+    <div class="rdfa activity-feed" id="stream-client-feed">
         <h1>stream-client</h1>
     </div>
 
@@ -25,6 +27,15 @@
     requirejs.config({
         baseUrl: '../../',
         deps: ['demos/main/main-demo']
+    });
+    </script>
+    <script src="http://cdn.livefyre.com/Livefyre.js"></script>
+    <script>
+    Livefyre.require(['auth-contrib#0.0.0-pre'], function (authContrib) {
+        var auth = Livefyre.auth;
+        auth.delegate(auth.createDelegate('http://qa-ext.livefyre.com'));
+        var authLog = authContrib.createLog(auth, document.getElementById('auth-log'));
+        authContrib.createButton(auth, document.getElementById('auth-button'), authLog);
     });
     </script>
 </body>

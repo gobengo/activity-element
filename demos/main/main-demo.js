@@ -48,9 +48,17 @@ var ActivityRenderer = function () {
 
 var CustomActivityRenderer = function () {
   return ActivityRenderer().use(
-    transform.map(ActivityElement),
+    transform.map(function (a) {
+      try {
+        return ActivityElement(a);
+      } catch (e) {
+        console.error("CustomActivityRenderer error rendering", a);
+        return a;
+      }
+    }),
     // add .activity class
     transform.map(function (el) {
+      if ( ! isHTMLEl(el)) { return el; }
       el.classList.add('activity');
       return el;
     })
@@ -64,7 +72,6 @@ var CustomActivityRenderer = function () {
 };
 
 var renderLivefyre = function (activity, next) {
-  console.log('using plugin to livefyreActivityRenderer', activity);
   var actorId = activity.actor && activity.actor.id;
   if (actorId && /livefyre/.test(actorId)) {
     return next(null, ActivityElement(activity));
@@ -87,6 +94,40 @@ var livefyreActivityRenderer = ActivityRenderer()
 /*********
 Activities
 **********/
+
+// Hot from Livefyre
+var sampleStream = new StreamClient({
+  hostname: 'stream.qa-ext.livefyre.com',
+  port: '80'
+});
+
+/**
+ * Login to livefyre to connect
+ */
+Livefyre.require(['auth-contrib#0.0.0-pre'], function (authContrib) {
+    var auth = Livefyre.auth;
+    auth.delegate(auth.createDelegate('http://qa-ext.livefyre.com'));
+    var authLog = authContrib.createLog(auth, document.getElementById('auth-log'));
+    authContrib.createButton(auth, document.getElementById('auth-button'), authLog);
+
+    var user = Livefyre.auth.get('livefyre')
+    if (user) {
+      onLogin(user);
+    } else {
+      Livefyre.auth.on('login.livefyre', onLogin);
+    }
+});
+
+// Connect to a Personalized Stream on login
+function onLogin(user) {
+  // connect to sample stream, which will consistently pump activities
+  sampleStream.connect(user.get('token'), 'sample');
+}
+
+transform(sampleStream)
+  .forEach(function (data) {
+    console.log('sample stream data', data)
+  })
 
 // Get a 100 activities of all sorts
 var activities = cycle(activityMocks.toArray())
@@ -114,7 +155,7 @@ activities
   .pipe(livefyreActivityRenderer)
   .forEach(function (el) {
     if ( ! isHTMLEl(el)) {
-      console.debug("Wont append to DOM", el);
+      // console.debug("Wont append to DOM", el);
       return;
     }
     // append to the feed!
@@ -127,6 +168,20 @@ activities
   .forEach(function (el) {
     exampleFeed.appendChild(el);
   });
+
+// show sample stuff from stream-client in that feed
+sampleStream
+  .pipe(CustomActivityRenderer())
+  .forEach(function (el) {
+    if ( ! isHTMLEl(el)) {
+      // console.debug("Wont append to DOM", el);
+      return;
+    }
+    var feed = streamClientFeed;
+    //prepend
+    feed.insertBefore(el, feed.firstChild);
+    // streamClientFeed.appendChild(el);
+  })
 
 function isHTMLEl(el) {
   return el && el.nodeType === 1;

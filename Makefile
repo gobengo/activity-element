@@ -10,6 +10,12 @@ lib: node_modules
 dist: build src config/requirejs.conf.js
 	./node_modules/requirejs/bin/r.js -o ./config/build.conf.js	
 
+css: build
+	lessc demos/main/main-styles.css > demos/main/index.css
+
+watch: build
+	./node_modules/.bin/watchify -s activity-element  -t brfs src/index.js -o dist/activity-element.js
+
 # if package.json changes, install
 node_modules: package.json
 	npm install

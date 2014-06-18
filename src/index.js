@@ -26,7 +26,7 @@ module.exports = function (activity) {
 
   // render verb
   var verb = activity.verb
-  var verbText = typeof verb === 'string' ? verb : verb.displayName;
+  var verbText = (typeof verb === 'string' ? verb : String(verb.displayName)).toLowerCase();
   switch (verbText) {
     case 'post':
       verbText = 'posted';
@@ -52,8 +52,13 @@ function actorElement(actor) {
   if (typeof actor === 'string') {
     return textNode(actor);
   }
-  if (actor.displayName) {
-    return textNode(actor.displayName);
+  var displayName = actor.displayName;
+  var actorExtension = actor['extension-person'];
+  if (actorExtension) {
+    displayName = actorExtension.displayName
+  }
+  if (displayName) {
+    return textNode(displayName);
   }
   return textNode(actor.toString());
 }
@@ -72,6 +77,10 @@ function siteElement(site) {
 }
 
 function objectElement(object) {
+  var collectionExtension = object && object['extension-collection'];
+  if (collectionExtension) {
+    object = collectionExtension;
+  }
   if (typeof object === 'string') {
     return textNode('the resource '+object);
   }
