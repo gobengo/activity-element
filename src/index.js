@@ -4,18 +4,23 @@ var domify = require('domify');
 var fs = require('fs');
 var activityTemplate = domify(fs.readFileSync(__dirname + '/activity.html', 'utf8'));
 
+var exports = module.exports = ActivityElement;
+exports.Renderer = require('./renderer');
+var phraser = exports.phraser = require('./phraser');
+
 var properties = {
   actor: 'as:actor',
   verb: 'as:verb',
   object: 'as:object'
 };
 
+exports.Renderer = require('./renderer');
 
 /**
  * activity-element
  * Render an activitystrea.ms 2.0 object to an HTMLElement
  */
-module.exports = function (activity) {
+function ActivityElement(activity) {
   var el = activityTemplate.cloneNode(true);
 
   // render actor
@@ -25,17 +30,11 @@ module.exports = function (activity) {
     });
 
   // render verb
-  var verb = activity.verb
-  var verbText = (typeof verb === 'string' ? verb : String(verb.displayName)).toLowerCase();
-  switch (verbText) {
-    case 'post':
-      verbText = 'posted';
-      break;
-  }
+  var verb = activity.verb;
   getElementsByProperty.call(el, properties.verb)
     .forEach(function (verbNode) {
       verbNode.setAttribute('content', verb);
-      appendText.call(verbNode, verbText);
+      verbNode.appendChild(textNode(phraser.verb(verb)))
     });
   
   // render object
@@ -77,29 +76,20 @@ function siteElement(site) {
 }
 
 function objectElement(object) {
-  var collectionExtension = object && object['extension-collection'];
-  if (collectionExtension) {
-    object = collectionExtension;
-  }
-  if (typeof object === 'string') {
-    return textNode('the resource '+object);
-  }
-  if (object.displayName) {
-    return textNode(quoted(object.displayName));
-  }
   switch (object.objectType) {
     case 'message':
       return messageElement(object);
     case 'collection':
       return collectionElement(object);
     default:
-      return textNode(singular(objectTypeString(object.objectType)));
+      return textNode(phraser.object(object));
   }
 }
 
 function collectionElement(collection) {
+  var collectionPhrase = phraser.object.collection(collection);
   var a = document.createElement('a');
-  a.appendChild(textNode(quoted(collection.title)));
+  a.appendChild(textNode(collectionPhrase));
   a.setAttribute('href', collection.url);
   if (collection.id) {
     a.setAttribute('resource', collection.id);    
@@ -108,32 +98,8 @@ function collectionElement(collection) {
 }
 
 function messageElement(message) {
-  var text = 'the message "{content}"'
-    .replace('{content}', message.content);
-  return textNode(text);
-}
-
-function objectTypeString(objectType) {
-  if (typeof objectType === 'string') {
-    return objectType;
-  }
-  if (objectType.displayName) {
-    return objectType.displayName;
-  }
-  return objectType.toString;
-}
-
-function quoted(text) {
-  return '"text"'.replace('text', text);
-}
-
-var vowels = ['a','e','i','o','u'];
-function singular(noun) {
-  var prefix = 'a ';
-  if (vowels.indexOf(noun[0]) === 0) {
-    prefix = 'an ';
-  }
-  return prefix + noun;
+  var messagePhrase = phraser.object.message(message);
+  return textNode(messagePhrase);
 }
 
 function textNode(t) {
@@ -142,19 +108,10 @@ function textNode(t) {
 
 /**
  * Get children of this HTMLELement that have the
- * provided property attribute
+ * provided RDFa property attribute
  */
 function getElementsByProperty(property, value) {
   var query = '[property~="{property}"]'.replace('{property}', property);
   var childrenWithProperty = this.querySelectorAll(query);
   return [].slice.call(childrenWithProperty)
-}
-
-/**
- * Append a text node to this HTMLElement
- */
-function appendText(str) {
-  var text = document.createTextNode(str);
-  this.appendChild(text);
-  return text;
 }

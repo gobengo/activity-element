@@ -18,7 +18,8 @@ require.config({
         'stream-slice': 'node_modules/stream-slice/src/index',
         'stream-client': 'lib/stream-client/src/StreamClient',
         'sockjs': 'lib/sockjs/sockjs',
-        domify: 'node_modules/domify/index'
+        domify: 'node_modules/domify/index',
+        Livefyre: 'http://cdn.livefyre.com/Livefyre'
     },
     map: {
         '*': {
@@ -38,7 +39,10 @@ require.config({
             exports: 'SockJS'
         },
         sinon: {
-          exports: 'sinon'
+            exports: 'sinon'
+        },
+        Livefyre: {
+            exports: 'Livefyre'
         }
     }
 });

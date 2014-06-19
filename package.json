@@ -4,7 +4,9 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "test": "./node_modules/karma/bin/karma start",
+    "test": "mocha -r test/dom.js test/spec/*",
+    "testw": "mocha -r test/dom.js test/spec/* -w",
+    "testb": "./node_modules/karma/bin/karma start",
     "start": "./node_modules/http-server/bin/http-server ."
   },
   "repository": {

@@ -1,6 +1,8 @@
 var ActivityElement = require('activity-element');
 var activityMocks = require('activity-mocks');
+var ActivityRenderer = ActivityElement.Renderer;
 
+var Livefyre = require('Livefyre');
 var StreamClient = require('stream-client');
 
 // stream utils
@@ -24,27 +26,6 @@ exampleActivity.appendChild(ActivityElement(activity))
 /*********
 Renderers
 **********/
-
-/**
- * Create a Transform that renders activities into HTMLElements
- */
-var ActivityRenderer = function () {
-  var userland = transform.compose();
-  // in the future this permalast transform should filter(Boolean)
-  var last = transform.compose();
-  var activityRenderer = transform.compose(userland, last);
-  // when you use things, only touch the element renderer
-  // that way the last step is still always filtering for falsy
-  activityRenderer.use = function () {
-    userland.use.apply(userland, arguments);
-    return activityRenderer;
-  };
-  // you can add to the last...
-  activityRenderer.last = function () {
-    last.use.apply(last, arguments);
-  }
-  return activityRenderer;
-};
 
 var CustomActivityRenderer = function () {
   return ActivityRenderer().use(
