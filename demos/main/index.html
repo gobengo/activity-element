@@ -31,12 +31,7 @@
     </script>
     <script src="http://cdn.livefyre.com/Livefyre.js"></script>
     <script>
-    Livefyre.require(['auth-contrib#0.0.0-pre'], function (authContrib) {
-        var auth = Livefyre.auth;
-        auth.delegate(auth.createDelegate('http://qa-ext.livefyre.com'));
-        var authLog = authContrib.createLog(auth, document.getElementById('auth-log'));
-        authContrib.createButton(auth, document.getElementById('auth-button'), authLog);
-    });
+
     </script>
 </body>
 </html>
