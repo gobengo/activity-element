@@ -24,6 +24,7 @@ describe('activity-element', function () {
             .map(mocks.create);
         lfMocks.forEach(function (activity) {
             var el = ActivityElement(activity);
+            // console.log(el.innerHTML);
             assert.ok(el);
             assert.typeOf(el.appendChild, 'function');
         });

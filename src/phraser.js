@@ -1,9 +1,6 @@
 'use strict'
 
-var domify = require('domify');
-var fs = require('fs');
 var extend = require('util-extend');
-var activityTemplate = domify(fs.readFileSync(__dirname + '/activity.html', 'utf8'));
 
 
 var phraser = module.exports = {};

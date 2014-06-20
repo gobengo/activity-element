@@ -3,6 +3,7 @@
 var domify = require('domify');
 var fs = require('fs');
 var activityTemplate = domify(fs.readFileSync(__dirname + '/activity.html', 'utf8'));
+var livefyreElements = require('./livefyre-elements');
 
 var exports = module.exports = ActivityElement;
 exports.Renderer = require('./renderer');
@@ -80,22 +81,12 @@ function objectElement(object) {
     case 'message':
       return messageElement(object);
     case 'collection':
-      return collectionElement(object);
+      return livefyreElements.collection(object);
     default:
       return textNode(phraser.object(object));
   }
 }
 
-function collectionElement(collection) {
-  var collectionPhrase = phraser.object.collection(collection);
-  var a = document.createElement('a');
-  a.appendChild(textNode(collectionPhrase));
-  a.setAttribute('href', collection.url);
-  if (collection.id) {
-    a.setAttribute('resource', collection.id);    
-  }
-  return a;
-}
 
 function messageElement(message) {
   var messagePhrase = phraser.object.message(message);

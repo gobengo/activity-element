@@ -5,6 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "mocha -r test/dom.js test/spec/*",
+    "testd": "mocha debug -r test/dom.js test/spec/*",
     "testw": "mocha -r test/dom.js test/spec/* -w",
     "testb": "./node_modules/karma/bin/karma start",
     "start": "./node_modules/http-server/bin/http-server ."
