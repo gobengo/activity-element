@@ -23,7 +23,8 @@ exports.Renderer = require('./renderer');
  */
 function ActivityElement(activity) {
   var el = activityTemplate.cloneNode(true);
-
+  el.activity = activity;
+  
   // render actor
   getElementsByProperty.call(el, properties.actor)
     .forEach(function (actorNode) {

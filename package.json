@@ -3,6 +3,9 @@
   "version": "0.0.2-dev.0",
   "description": "",
   "main": "src/index.js",
+  "browserify": {
+    "transform": ["brfs"]
+  },
   "scripts": {
     "test": "mocha -r test/dom.js test/spec/*",
     "testd": "mocha debug -r test/dom.js test/spec/*",
