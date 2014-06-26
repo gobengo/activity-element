@@ -25,6 +25,18 @@ function ActivityElement(activity) {
   var el = activityTemplate.cloneNode(true);
   el.activity = activity;
   
+  // hack: if this is a sitePostCollection activity, the goal is to
+  // have the collection rendered with a datetime of the activity.published
+  // (there is no collection.published).
+  // so detect that, update the activity to have collection.published, and
+  // re-render
+  if (isSitePostCollection(activity) && ! activity.object.published) {
+    activity = Object.create(activity);
+    activity.object = Object.create(activity.object);
+    activity.object.published = activity.published;
+    return ActivityElement(activity);
+  }
+
   // render actor
   getElementsByProperty.call(el, properties.actor)
     .forEach(function (actorNode) {
@@ -45,6 +57,12 @@ function ActivityElement(activity) {
   });
   return el;
 };
+
+function isSitePostCollection(a) {
+  var object = a.object;
+  var objectType = object && object.objectType;
+  return objectType && objectType === 'collection';
+}
 
 function actorElement(actor) {
   if (actor.objectType === 'site') {

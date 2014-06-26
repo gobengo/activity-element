@@ -26,6 +26,9 @@ phraser.verb = function phraseVeb(verb) {
     case 'post':
       verbText = 'posted';
       break;
+    case 'create':
+      verbText = 'created';
+      break;
   }
   return verbText;
 }
